@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="timer.css" />
+
+    <title>Hello, world!</title>
+</head>
+<body>
+    <nav>
+        <div class="nav nav-pills nav-fill" id="tabControl" role="tablist">
+            <a class="nav-item nav-link active" href="#nav-timer" id="timer-tab" data-toggle="tab" role="tab" aria-controls="nav-timer" aria-selected="true">Timer</a>
+            <a class="nav-item nav-link" href="#nav-settings" id="settings-tab" data-toggle="tab" role="tab" aria-controls="nav-settings" aria-selected="false">Settings</a>
+        </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-timer" role="tabpanel" aria-labelledby="timer-tab">
+            <div class="container">
+                <div class="row ">
+                    <div class="col">
+                        <div class="timer-display">00:45</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="counter-display"> Round: 0</div>
+                    </div>                    
+                </div>
+                <div class="row justify-content-center  fixed-bottom">
+                    <div class="col-4 button-container">
+                        <button type="button" class="btn btn-primary btn-lg">Start</button>
+                    </div>
+                    <div class="col-4 button-container">
+                        <button type="button" class="btn btn-primary btn-lg">Pause</button>
+                    </div>
+                    <div class="col-4 button-container">
+                        <button type="button" class="btn btn-primary btn-lg">Stop</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="settings-tab">
+            <p>
+                Consequat occaecat ullamco amet non eiusmod nostrud dolore irure incididunt est duis anim sunt officia. 
+                Fugiat velit proident aliquip nisi incididunt nostrud exercitation proident est nisi. 
+                Irure magna elit commodo anim ex veniam culpa eiusmod id nostrud sit cupidatat in veniam ad. 
+                Eiusmod consequat eu adipisicing minim anim aliquip cupidatat culpa excepteur quis. 
+                Occaecat sit eu exercitation irure Lorem incididunt nostrud.
+            </p>
+        </div>
+    </div>
+
+    <!--<div class="jumbotron text-center">
+        <h1>My First Bootstrap Page</h1>
+        <p>Resize this responsive page to see the effect!</p>
+    </div>-->
+
+    <!--<div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Column 1</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            </div>
+            <div class="col-sm-4">
+                <h3>Column 2</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            </div>
+            <div class="col-sm-4">
+                <h3>Column 3</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            </div>
+        </div>
+    </div>-->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="jquery-3.5.1.slim.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
+    <script src="bootstrap.bundle.min.js"></script>
+</body>
+</html>
