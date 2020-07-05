@@ -9,7 +9,23 @@
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="timer.css" />
 
-    <title>Hello, world!</title>
+    <script src="jquery-3.5.1.slim.min.js"></script>
+
+    <!--<script src="timer.js"></script>-->
+
+    <title>Nanchus's online timer</title>
+
+    <script>
+        $(document).ready(function () {
+            $('#start_button').click(startCountdown);
+            $('#stop_button').click(stopCountdown);
+            $('#reset_button').click(resetCountdown);
+            $('#button_save_settings').click(saveSettings);
+            initValues();
+            displayTimer();
+        });
+    </script>
+
 </head>
 <body>
     <nav>
@@ -24,68 +40,79 @@
             <div class="container">
                 <div class="row ">
                     <div class="col">
-                        <div class="timer-display">00:45</div>
+                        <div class="timer-display" id="timer_display">00:45</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="counter-display"> Round: 0</div>
-                    </div>                    
+                        <div class="counter-display" id="counter_display">Round: 0</div>
+                    </div>
                 </div>
                 <div class="row justify-content-center  fixed-bottom">
                     <div class="col-4 button-container">
-                        <button type="button" class="btn btn-primary btn-lg">Start</button>
+                        <button type="button" id="start_button" class="btn btn-primary btn-lg">Start</button>
                     </div>
                     <div class="col-4 button-container">
-                        <button type="button" class="btn btn-primary btn-lg">Pause</button>
+                        <button type="button" id="stop_button" class="btn btn-primary btn-lg">Stop</button>
                     </div>
                     <div class="col-4 button-container">
-                        <button type="button" class="btn btn-primary btn-lg">Stop</button>
-                    </div>                    
+                        <button type="button" id="reset_button" class="btn btn-primary btn-lg">Reset</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="settings-tab">
-            <p>
-                Consequat occaecat ullamco amet non eiusmod nostrud dolore irure incididunt est duis anim sunt officia. 
-                Fugiat velit proident aliquip nisi incididunt nostrud exercitation proident est nisi. 
-                Irure magna elit commodo anim ex veniam culpa eiusmod id nostrud sit cupidatat in veniam ad. 
-                Eiusmod consequat eu adipisicing minim anim aliquip cupidatat culpa excepteur quis. 
-                Occaecat sit eu exercitation irure Lorem incididunt nostrud.
-            </p>
+
+            <div class="jumbotron">
+
+                <button type="button" id="button_save_settings" class="btn btn-primary">Save</button>
+                <form class="form-inline col-sm form-settings">
+                    <div class="form-group row ">
+                        <label for="round_duration_hours" class="col-sm col-form-label">Rounds duration:</label>
+                        <input id="round_duration_hours" class="form-control time-input" type="number" min="0" max="23" />
+                        <span class="time-separator">:</span>
+                        <input id="round_duration_minutes" class="form-control time-input" type="number" min="0" max="59" />
+                        <span class="time-separator">:</span>
+                        <input id="round_duration_seconds" class="form-control time-input" type="number" min="0" max="59" />
+                    </div>
+                </form>
+
+                <form class="form-inline  col-sm form-settings">
+                    <div class="form-group row ">
+                        <label for="rest_duration_minutes" class="col-sm col-form-label">Rest duration:</label>
+                        <input id="rest_duration_minutes" class="form-control time-input" type="number" min="0" max="59" />
+                        <label class="time-separator">:</label>
+                        <input id="rest_duration_seconds" class="form-control time-input" type="number" min="0" max="59" />
+                    </div>
+                </form>
+
+                <form class="form-inline col-sm form-settings">
+                    <div class="form-group row ">
+                        <label for="training_duration_rounds" class="col-sm col-form-label">Training rounds:</label>
+                        <input id="training_duration_rounds" class="form-control time-input" type="number" min="0" max="500" />
+                    </div>
+                </form>
+                <form class="form-inline col-sm form-settings">
+                    <div class="form-group row ">
+                        <label for="training_duration_hours" class="col-sm col-form-label">Training duration:</label>
+                        <input id="training_duration_hours" class="form-control time-input" type="text" readonly />
+                        <span class="time-separator">:</span>
+                        <input id="training_duration_minutes" class="form-control time-input" type="text" readonly />
+                        <span class="time-separator">:</span>
+                        <input id="training_duration_seconds" class="form-control time-input" type="text" readonly />
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
-
-    <!--<div class="jumbotron text-center">
-        <h1>My First Bootstrap Page</h1>
-        <p>Resize this responsive page to see the effect!</p>
-    </div>-->
-
-    <!--<div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Column 1</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-            </div>
-            <div class="col-sm-4">
-                <h3>Column 2</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-            </div>
-            <div class="col-sm-4">
-                <h3>Column 3</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-            </div>
-        </div>
-    </div>-->
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="jquery-3.5.1.slim.min.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>-->
     <script src="bootstrap.bundle.min.js"></script>
+    <script src="timer.js"></script>
+
 </body>
 </html>
