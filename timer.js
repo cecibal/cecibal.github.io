@@ -47,7 +47,7 @@ var roundCounter = 0;
 var isRunning = false;
 var newValuesSaved = false;
 
-var audio = new Audio('sound_effect.mp3');
+var audio = new Audio();  //('sound_effect.mp3');
 
 var countdownHandler;
 
@@ -214,5 +214,7 @@ $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 })
 
 function playSound() {
+	audio.src = 'sound_effect.mp3';
     audio.play();
+	//audio.src = '';
 }
