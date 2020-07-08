@@ -155,7 +155,7 @@ function displayTimer() {
 function saveSettings() {
 
     if (isRunning) {
-        if (!confirm('Cannot save while runnig. Stop timer?'))
+        if (!confirm('Cannot save while running. Stop timer?'))
             return;
 
         resetCountdown();
@@ -193,6 +193,39 @@ function saveSettings() {
 
     var trainingDurationSeconds = (roundHours * 60 * 60 + roundMinutes * 60 + roundSeconds
         + restMinutes * 60 + restSeconds) * trainingRounds;
+
+    var trainingHours = parseInt(trainingDurationSeconds / 60 / 60);
+    var trainingMinutes = parseInt((trainingDurationSeconds - (trainingHours * 60 * 60)) / 60);
+    var trainingSeconds = (trainingDurationSeconds - (trainingHours * 60 * 60)) - trainingMinutes * 60;
+
+    $('#training_duration_hours').val(padNumber(trainingHours, 2));
+    $('#training_duration_minutes').val(padNumber(trainingMinutes, 2));
+    $('#training_duration_seconds').val(padNumber(trainingSeconds, 2));
+}
+
+
+function initSettings()
+{
+    durationRoundHours = parseInt(!localStorage.getItem('durationRoundHours') ? 0 : localStorage.getItem('durationRoundHours'));
+    durationRoundMinutes = parseInt(!localStorage.getItem('durationRoundMinutes') ? 0 : localStorage.getItem('durationRoundMinutes'));
+    durationRoundSeconds = parseInt(!localStorage.getItem('durationRoundSeconds') ? 45 : localStorage.getItem('durationRoundSeconds'));
+	
+	$('#round_duration_hours').val(padNumber(durationRoundHours, 2));
+	$('#round_duration_minutes').val(padNumber(durationRoundMinutes, 2));
+	$('#round_duration_seconds').val(padNumber(durationRoundSeconds, 2));
+	
+    durationRestMinutes = parseInt(!localStorage.getItem('durationRestMinutes') ? 0 : localStorage.getItem('durationRestMinutes'));
+    durationRestSeconds = parseInt(!localStorage.getItem('durationRestSeconds') ? 45 : localStorage.getItem('durationRestSeconds'));
+	
+	$('#rest_duration_minutes').val(padNumber(durationRestMinutes, 2));
+	$('#rest_duration_seconds').val(padNumber(durationRestSeconds, 2));
+    
+	durationRounds = parseInt(!localStorage.getItem('durationRounds') ? 10 : localStorage.getItem('durationRounds'));
+	
+	$('#training_duration_rounds').val(durationRounds);
+    
+	var trainingDurationSeconds = (durationRoundHours * 60 * 60 + durationRoundMinutes * 60 + durationRoundSeconds
+        + durationRestMinutes * 60 + durationRestSeconds) * durationRounds;
 
     var trainingHours = parseInt(trainingDurationSeconds / 60 / 60);
     var trainingMinutes = parseInt((trainingDurationSeconds - (trainingHours * 60 * 60)) / 60);
