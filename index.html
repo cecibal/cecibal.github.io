@@ -24,6 +24,11 @@
             initValues();
             displayTimer();
 			initSettings();
+			
+			if (storageAvailable('localStorage')) 
+			{
+				alert('no local storage :(');
+			}
         });
     </script>
 
