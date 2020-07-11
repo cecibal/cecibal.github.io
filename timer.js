@@ -52,15 +52,27 @@ var audio = new Audio();  //('sound_effect.mp3');
 var countdownHandler;
 
 function initValues() {
-    durationRoundHours = localStorage.getItem('durationRoundHours') ? parseInt(localStorage.getItem('durationRoundHours')) : 0;
-    durationRoundMinutes = localStorage.getItem('durationRoundMinutes') ? parseInt(localStorage.getItem('durationRoundMinutes')) : 0;
-    durationRoundSeconds = localStorage.getItem('durationRoundSeconds') ? parseInt(localStorage.getItem('durationRoundSeconds')) : 45;
 
-    durationRestMinutes = localStorage.getItem('durationRestMinutes') ? parseInt(localStorage.getItem('durationRestMinutes')) : 0;
-    durationRestSeconds = localStorage.getItem('durationRestSeconds') ? parseInt(localStorage.getItem('durationRestSeconds')) : 45;
+    if (storageAvailable('localStorage')) {
+        durationRoundHours = localStorage.getItem('durationRoundHours') ? parseInt(localStorage.getItem('durationRoundHours')) : 0;
+        durationRoundMinutes = localStorage.getItem('durationRoundMinutes') ? parseInt(localStorage.getItem('durationRoundMinutes')) : 0;
+        durationRoundSeconds = localStorage.getItem('durationRoundSeconds') ? parseInt(localStorage.getItem('durationRoundSeconds')) : 45;
 
-    durationRounds = localStorage.getItem('durationRounds') ? parseInt(localStorage.getItem('durationRounds')) : 10;
+        durationRestMinutes = localStorage.getItem('durationRestMinutes') ? parseInt(localStorage.getItem('durationRestMinutes')) : 0;
+        durationRestSeconds = localStorage.getItem('durationRestSeconds') ? parseInt(localStorage.getItem('durationRestSeconds')) : 45;
 
+        durationRounds = localStorage.getItem('durationRounds') ? parseInt(localStorage.getItem('durationRounds')) : 10;
+    }
+    else { // default values for no local storage
+        durationRoundHours = 0;
+        durationRoundMinutes = 0;
+        durationRoundSeconds =  45;
+
+        durationRestMinutes =  0;
+        durationRestSeconds =  45;
+
+        durationRounds = 10;
+    }
     countdownRound = durationRoundHours * 60 * 60 + durationRoundMinutes * 60 + durationRoundSeconds;
     countdownRest = durationRestMinutes * 60 + durationRestSeconds;
 
@@ -74,7 +86,13 @@ function startCountdown() {
 
     isRunning = true;
     $('#start_button').prop('disabled', true);
-    //initValues();
+
+    var userAgent = window.navigator.userAgent;
+
+    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) { // iPad or iPhone
+        playSound();  // to start with user interaction
+    }
+    
     //roundCounter = 1;
 
     countdownHandler = setInterval(function () {       
@@ -176,23 +194,31 @@ function saveSettings() {
     durationRoundMinutes = roundMinutes;
     newValuesSaved |= durationRoundSeconds != roundSeconds;
     durationRoundSeconds = roundSeconds;
-    localStorage.setItem('durationRoundHours', durationRoundHours);
-    localStorage.setItem('durationRoundMinutes', durationRoundMinutes);
-    localStorage.setItem('durationRoundSeconds', durationRoundSeconds);
 
     newValuesSaved |= durationRestMinutes != restMinutes;
     durationRestMinutes = restMinutes;
     newValuesSaved |= durationRestSeconds != restSeconds;
     durationRestSeconds = restSeconds;
-    localStorage.setItem('durationRestMinutes', durationRestMinutes);
-    localStorage.setItem('durationRestSeconds', durationRestSeconds);
 
     newValuesSaved |= durationRounds != trainingRounds;
     durationRounds = trainingRounds;
-    localStorage.setItem('durationRounds', durationRounds);
 
-    var trainingDurationSeconds = (roundHours * 60 * 60 + roundMinutes * 60 + roundSeconds
-        + restMinutes * 60 + restSeconds) * trainingRounds;
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('durationRoundHours', durationRoundHours);
+        localStorage.setItem('durationRoundMinutes', durationRoundMinutes);
+        localStorage.setItem('durationRoundSeconds', durationRoundSeconds);
+
+        localStorage.setItem('durationRestMinutes', durationRestMinutes);
+        localStorage.setItem('durationRestSeconds', durationRestSeconds);
+
+        localStorage.setItem('durationRounds', durationRounds);
+    }
+    showTrainingDurationTime();
+}
+
+function showTrainingDurationTime() {
+    var trainingDurationSeconds = (durationRoundHours * 60 * 60 + durationRoundMinutes * 60 + durationRoundSeconds
+        + durationRestMinutes * 60 + durationRestSeconds) * durationRounds;
 
     var trainingHours = parseInt(trainingDurationSeconds / 60 / 60);
     var trainingMinutes = parseInt((trainingDurationSeconds - (trainingHours * 60 * 60)) / 60);
@@ -206,34 +232,39 @@ function saveSettings() {
 
 function initSettings()
 {
-    durationRoundHours = parseInt(!localStorage.getItem('durationRoundHours') ? 0 : localStorage.getItem('durationRoundHours'));
-    durationRoundMinutes = parseInt(!localStorage.getItem('durationRoundMinutes') ? 0 : localStorage.getItem('durationRoundMinutes'));
-    durationRoundSeconds = parseInt(!localStorage.getItem('durationRoundSeconds') ? 45 : localStorage.getItem('durationRoundSeconds'));
+    if (storageAvailable('localStorage')) {
+        durationRoundHours = parseInt(!localStorage.getItem('durationRoundHours') ? 0 : localStorage.getItem('durationRoundHours'));
+        durationRoundMinutes = parseInt(!localStorage.getItem('durationRoundMinutes') ? 0 : localStorage.getItem('durationRoundMinutes'));
+        durationRoundSeconds = parseInt(!localStorage.getItem('durationRoundSeconds') ? 45 : localStorage.getItem('durationRoundSeconds'));
+
+        durationRestMinutes = parseInt(!localStorage.getItem('durationRestMinutes') ? 0 : localStorage.getItem('durationRestMinutes'));
+        durationRestSeconds = parseInt(!localStorage.getItem('durationRestSeconds') ? 45 : localStorage.getItem('durationRestSeconds'));
+
+        durationRounds = parseInt(!localStorage.getItem('durationRounds') ? 10 : localStorage.getItem('durationRounds'));
+    }
+    else {
+        durationRoundHours = parseInt(!localStorage.getItem('durationRoundHours') ? 0 : localStorage.getItem('durationRoundHours'));
+        durationRoundMinutes = parseInt(!localStorage.getItem('durationRoundMinutes') ? 0 : localStorage.getItem('durationRoundMinutes'));
+        durationRoundSeconds = parseInt(!localStorage.getItem('durationRoundSeconds') ? 45 : localStorage.getItem('durationRoundSeconds'));
+
+        durationRestMinutes = parseInt(!localStorage.getItem('durationRestMinutes') ? 0 : localStorage.getItem('durationRestMinutes'));
+        durationRestSeconds = parseInt(!localStorage.getItem('durationRestSeconds') ? 45 : localStorage.getItem('durationRestSeconds'));
+
+        durationRounds = parseInt(!localStorage.getItem('durationRounds') ? 10 : localStorage.getItem('durationRounds'));
+    }
 	
 	$('#round_duration_hours').val(padNumber(durationRoundHours, 2));
 	$('#round_duration_minutes').val(padNumber(durationRoundMinutes, 2));
 	$('#round_duration_seconds').val(padNumber(durationRoundSeconds, 2));
 	
-    durationRestMinutes = parseInt(!localStorage.getItem('durationRestMinutes') ? 0 : localStorage.getItem('durationRestMinutes'));
-    durationRestSeconds = parseInt(!localStorage.getItem('durationRestSeconds') ? 45 : localStorage.getItem('durationRestSeconds'));
 	
 	$('#rest_duration_minutes').val(padNumber(durationRestMinutes, 2));
 	$('#rest_duration_seconds').val(padNumber(durationRestSeconds, 2));
     
-	durationRounds = parseInt(!localStorage.getItem('durationRounds') ? 10 : localStorage.getItem('durationRounds'));
 	
 	$('#training_duration_rounds').val(durationRounds);
-    
-	var trainingDurationSeconds = (durationRoundHours * 60 * 60 + durationRoundMinutes * 60 + durationRoundSeconds
-        + durationRestMinutes * 60 + durationRestSeconds) * durationRounds;
 
-    var trainingHours = parseInt(trainingDurationSeconds / 60 / 60);
-    var trainingMinutes = parseInt((trainingDurationSeconds - (trainingHours * 60 * 60)) / 60);
-    var trainingSeconds = (trainingDurationSeconds - (trainingHours * 60 * 60)) - trainingMinutes * 60;
-
-    $('#training_duration_hours').val(padNumber(trainingHours, 2));
-    $('#training_duration_minutes').val(padNumber(trainingMinutes, 2));
-    $('#training_duration_seconds').val(padNumber(trainingSeconds, 2));
+    showTrainingDurationTime();
 }
 
 $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -247,9 +278,9 @@ $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 })
 
 function playSound() {
+	audio.src = '';
 	audio.src = 'sound_effect.mp3';
     audio.play();
-	//audio.src = '';
 }
 
 function storageAvailable(type) {
