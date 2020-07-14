@@ -90,7 +90,7 @@ function startCountdown() {
     var userAgent = window.navigator.userAgent;
 
     if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i)) { // iPad or iPhone
-        playSound();  // to start with user interaction
+        audio.play();  // to start with user interaction
     }
     
     //roundCounter = 1;
